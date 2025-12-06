@@ -40,18 +40,24 @@ export const SummaryTab: React.FC = () => {
           <div className="p-6 border-b border-gray-100 flex justify-between items-start">
             <div>
               <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Total Balance</h2>
-              <div className="mt-1 flex items-baseline space-x-2">
-                <span className="text-4xl font-bold text-gray-900">
+              <div className="mt-1 flex items-baseline space-x-2 flex-wrap">
+                <span className="text-3xl sm:text-4xl font-bold text-gray-900">
                   ${accountData.totalBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
                 <span className="text-sm text-gray-400">as of today</span>
               </div>
             </div>
-            <div className="bg-gray-50 px-3 py-1 rounded-md border border-gray-100">
+            <div className="bg-gray-50 px-3 py-1 rounded-md border border-gray-100 hidden sm:block">
               <span className="text-xs font-medium text-gray-500">
                 Vested: ${accountData.vestedBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
+          </div>
+          
+          <div className="px-6 py-2 sm:hidden bg-gray-50 border-b border-gray-100">
+             <span className="text-xs font-medium text-gray-500">
+                Vested: ${accountData.vestedBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
           </div>
           
           <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -106,16 +112,16 @@ export const SummaryTab: React.FC = () => {
           <div className="divide-y divide-gray-100">
             {transactions.slice(0, 3).map((tx) => (
               <div key={tx.id} className="p-5 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 shrink-0">
                      {tx.type === 'Contribution' ? <RefreshCcw size={18} /> : <DollarSign size={18} />}
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{tx.description}</p>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">{tx.description}</p>
                     <p className="text-xs text-gray-500">{tx.date}</p>
                   </div>
                 </div>
-                <div className="text-right">
+                <div className="text-right ml-3 shrink-0">
                   <p className={`text-sm font-semibold ${tx.amount > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
                     {tx.amount > 0 ? '+' : ''}{tx.amount.toLocaleString(undefined, { style: 'currency', currency: 'USD' })}
                   </p>

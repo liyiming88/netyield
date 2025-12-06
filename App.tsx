@@ -63,7 +63,7 @@ const AppContent: React.FC = () => {
         );
       case TabView.INVESTMENTS:
          return (
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+            <div className="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-gray-200">
                  <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-6">
                   <div>
                     <h2 className="text-xl font-bold text-gray-900">Investment Options</h2>
@@ -71,8 +71,8 @@ const AppContent: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left">
+                <div className="overflow-x-auto -mx-6 sm:mx-0 px-6 sm:px-0">
+                  <table className="w-full text-sm text-left min-w-[600px]">
                     <thead className="bg-gray-50 text-gray-600 font-medium">
                       <tr>
                         <th className="py-3 px-4 rounded-l-lg">Name</th>
@@ -99,7 +99,7 @@ const AppContent: React.FC = () => {
         );
       case TabView.HISTORY:
          return (
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+            <div className="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-gray-200">
                  <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-6">
                   <div>
                     <h2 className="text-xl font-bold text-gray-900">Transaction History</h2>
@@ -110,16 +110,16 @@ const AppContent: React.FC = () => {
                 <div className="space-y-3">
                   {transactions.map((tx) => (
                     <div key={tx.id} className="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:shadow-sm transition-shadow">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${tx.amount > 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                      <div className="flex items-center gap-4 flex-1 min-w-0">
+                        <div className={`w-10 h-10 rounded-full shrink-0 flex items-center justify-center ${tx.amount > 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                           {tx.amount > 0 ? <ArrowUpRight size={20} /> : <ArrowDownRight size={20} />}
                         </div>
-                        <div>
-                          <p className="font-semibold text-gray-900">{tx.description}</p>
+                        <div className="min-w-0">
+                          <p className="font-semibold text-gray-900 truncate pr-2">{tx.description}</p>
                           <p className="text-xs text-gray-500">{tx.date} • {tx.type}</p>
                         </div>
                       </div>
-                      <span className={`font-bold ${tx.amount > 0 ? 'text-green-700' : 'text-gray-900'}`}>
+                      <span className={`font-bold shrink-0 ml-2 whitespace-nowrap ${tx.amount > 0 ? 'text-green-700' : 'text-gray-900'}`}>
                         {tx.amount > 0 ? '+' : ''}{tx.amount.toLocaleString(undefined, { style: 'currency', currency: 'USD' })}
                       </span>
                     </div>
@@ -138,7 +138,7 @@ const AppContent: React.FC = () => {
   const TabButton = ({ tab, label, icon: Icon }: { tab: TabView, label: string, icon: React.ElementType }) => (
     <button
       onClick={() => setActiveTab(tab)}
-      className={`pb-3 px-1 flex items-center space-x-2 border-b-2 transition-colors font-medium text-sm ${
+      className={`pb-3 px-1 flex items-center space-x-2 border-b-2 transition-colors font-medium text-sm whitespace-nowrap ${
         activeTab === tab
           ? 'border-fidelity-light text-fidelity-green'
           : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -155,7 +155,7 @@ const AppContent: React.FC = () => {
       
       <main className="flex-grow container mx-auto px-4 py-8">
         {/* Breadcrumbs */}
-        <div className="text-xs text-gray-500 mb-6 flex items-center">
+        <div className="text-xs text-gray-500 mb-6 flex items-center overflow-x-auto whitespace-nowrap">
             <a href="#" className="hover:underline">Home</a>
             <span className="mx-2">/</span>
             <span className="text-gray-700 font-medium">Plan Summary</span>
@@ -163,12 +163,12 @@ const AppContent: React.FC = () => {
 
         {/* Account Title */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-fidelity-green mb-1">ABC CORPORATION 401(k) PLAN</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-fidelity-green mb-1 break-words">ABC CORPORATION 401(k) PLAN</h1>
           <p className="text-gray-500 text-sm">Account #: •••••6789</p>
         </div>
 
         {/* Page Tabs */}
-        <div className="flex space-x-6 border-b border-gray-200 mb-8 overflow-x-auto">
+        <div className="flex space-x-6 border-b border-gray-200 mb-8 overflow-x-auto hide-scrollbar">
           <TabButton tab={TabView.SUMMARY} label="Summary" icon={Home} />
           <TabButton tab={TabView.CONTRIBUTIONS} label="Contributions" icon={FileText} />
           <TabButton tab={TabView.INVESTMENTS} label="Investments" icon={PieChart} />
